@@ -1,0 +1,62 @@
+extends layout
+
+block content
+  h1 Map of Registrations
+
+  // Include Leaflet.js and MarkerCluster CSS
+  link(rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css")
+  link(rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css")
+  link(rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css")
+
+  // Add a div for the map
+  div#map(style="height: 600px;")
+
+  // Include Leaflet.js and MarkerCluster scripts
+  script(src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js")
+  script(src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster-src.js")
+  script.
+    document.addEventListener('DOMContentLoaded', async () => {
+      const map = L.map('map').setView([0, 0], 2); // Set initial view
+
+      // Add OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19
+      }).addTo(map);
+
+      // Initialize marker clustering
+      const markers = L.markerClusterGroup();
+
+      // Fetch all registration data
+      const fetchRegistrations = async () => {
+        const response = await fetch('/map/registrations');
+        const data = await response.json();
+        return data;
+      };
+
+      const registrations = await fetchRegistrations();
+
+      // Add markers for each registration
+      registrations.forEach(reg => {
+        if (reg.location && reg.location.coordinates) {
+          const [lng, lat] = reg.location.coordinates;
+
+          // Check if an image exists
+          const imageHtml = reg.image
+            ? `<img src="data:image/jpeg;base64,${reg.image}" style="width:100px;height:auto;" alt="User Picture" />`
+            : 'No image available';
+
+          const marker = L.marker([lat, lng])
+            .bindPopup(`
+              <div>
+                <b>${reg.name}</b><br>
+                ${reg.city || 'City not provided'}<br>
+                ${imageHtml}
+              </div>
+            `); // Popup with registration details and image
+          markers.addLayer(marker);
+        }
+      });
+
+      // Add marker cluster group to the map
+      map.addLayer(markers);
+    });

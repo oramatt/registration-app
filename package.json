@@ -1,0 +1,25 @@
+{
+  "name": "demo-node-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "nodemon ./start.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-auth": "^4.2.0",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "mongoose": "^8.9.5",
+    "nodemon": "^3.1.9",
+    "pug": "^3.0.3"
+  }
+}

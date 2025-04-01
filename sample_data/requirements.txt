@@ -1,0 +1,5 @@
+pymongo
+faker
+geopandas
+shapely
+pillow

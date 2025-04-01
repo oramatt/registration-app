@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= title
+  h2 The current date and time from MongoDB is: #{mongoDateResult}
+  h2 The current date and time from Oracle is: #{sysdateResult}
+  h3 MongoDB Connection Status: #{mongoConnectionStatus}
+  h3 Oracle Connection Status: #{oracleConnectionStatus}
+  h4 Current Connection String: #{connectionString}
+
+    // Display the total count of registrations
+  if mongoCount
+    h3 Total Registrations: #{mongoCount}

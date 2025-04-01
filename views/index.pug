@@ -1,0 +1,95 @@
+extends layout
+
+block content
+  // Add blank space at the top
+  div(style="margin-top: 1050px;")
+
+  h1= title
+
+  if totalCount != null
+    h2 Total Registrations: #{totalCount}
+
+  // Display email address domain counts
+  if errors.domainCounts
+    div.alert.alert-danger= errors.domainCounts
+  else if domainCounts && domainCounts.length
+    h2.mt-5 Registrations by Email Domain
+    table.table.table-bordered.table-striped.mt-5
+      thead.table-dark
+        tr
+          th Domain
+          th Count
+      tbody
+        each domainCount in domainCounts
+          tr
+            td= domainCount._id
+            td= domainCount.count
+
+  // Search form at the top
+  form(action="/registrations" method="GET" class="mb-4")
+    div.form-group
+      input.form-control(type="text" name="search" placeholder="Search..." value=searchQuery)
+    button.btn.btn-primary(type="submit") Search
+
+  // Form for deleting all registrations
+  form(action="/registrations/deleteAll" method="POST" onsubmit="return confirm('Are you sure you want to delete all registrations?');")
+    button.btn.btn-danger(type="submit") Delete All Registrations
+
+  if errors.registrations
+    div.alert.alert-danger= errors.registrations
+  else if registrations.length
+    table.table.table-bordered.table-striped.mt-5
+      thead.table-dark
+        tr
+          th Name
+          th Email
+          th Notes
+          th Image
+          th Actions
+      tbody
+        each registration in registrations
+          tr
+            td= registration.name
+            td= registration.email
+            td= registration.notes
+            if registration.image
+              td
+                img(src=`data:image/jpeg;base64,${registration.image}`, alt='Registration Image', style='width: 100px; height: auto;')
+            else
+              td No image available
+            td
+              form(action=`/registrations/delete/${registration._id}` method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this registration?');")
+                button.btn.btn-danger(type="submit") Delete
+              a.btn.btn-primary(href=`/registrations/update/${registration._id}`) Update
+  else
+    p No registrations yet :(
+
+  // Search form at the bottom
+  form(action="/registrations" method="GET" class="mt-4 mb-4")
+    div.form-group
+      input.form-control(type="text" name="search" placeholder="Search..." value=searchQuery)
+    button.btn.btn-primary(type="submit") Search
+
+  // Pagination Controls
+  if totalPages > 1
+    nav
+      ul.pagination
+        if currentPage > 1
+          li.page-item
+            a.page-link(href=`/registrations?page=${currentPage - 1}&limit=${limit}&search=${searchQuery}`) Previous
+        else
+          li.page-item.disabled
+            span.page-link Previous
+        each page in Array(totalPages).fill().map((_, i) => i + 1)
+          if page === currentPage
+            li.page-item.active
+              span.page-link= page
+          else
+            li.page-item
+              a.page-link(href=`/registrations?page=${page}&limit=${limit}&search=${searchQuery}`)= page
+        if currentPage < totalPages
+          li.page-item
+            a.page-link(href=`/registrations?page=${currentPage + 1}&limit=${limit}&search=${searchQuery}`) Next
+        else
+          li.page-item.disabled
+            span.page-link Next
