@@ -345,6 +345,7 @@ router.get('/test', async (req, res) => {
   });
 });
 
+// Display map with lat/long for sampledata
 router.get('/map', async (req, res) => {
   try {
     const registrations = await Registration.find({
