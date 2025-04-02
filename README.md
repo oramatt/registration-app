@@ -27,4 +27,5 @@
 
 11. `sample_data/makeJSONData_OPTIONALPICS_wGeoData.py` --> Random data generation can be done with this script. This script uses shapefiles in the `geodata` directory in order to create lat/long cooridates within landmass bountries. This script will optionally create synthetic pictures or fetch cat pictures from CATAAS (Cat As A Service) .
 
-  
+
+Credits - Based on tutorial found here: https://www.sitepoint.com/build-simple-beginner-app-node-bootstrap-mongodb/
