@@ -29,7 +29,7 @@ update_env_file() {
       echo "DATABASE=mongodb://$oracle_user:*****@$oracle_host/$oracle_user?authMechanism=PLAIN&authSource=%24external&retryWrites=false&loadBalanced=true&tls=true&tlsAllowInvalidCertificates=true"
       ;;
     3)
-      echo "DATABASE=mongodb://matt:M%40tt0rcl123%21@RDDAINSUH6U1OKC-MYAJDB.adb.us-ashburn-1.oraclecloudapps.com:27017/matt?authMechanism=PLAIN&authSource=%24external&retryWrites=false&loadBalanced=true&tls=true&tlsAllowInvalidCertificates=true" > .env
+      echo "DATABASE=mongodb://noone:nopass@where:27017/noone?authMechanism=PLAIN&authSource=%24external&retryWrites=false&loadBalanced=true&tls=true&tlsAllowInvalidCertificates=true" > .env
       echo "Using OCI Autonomous JSON connection."
       ;;
     *)
