@@ -1,4 +1,4 @@
-# Registration App
+# MERN Registration App
 
 A demonstration Node.js application showcasing MongoDB to Oracle API for MongoDB migration capabilities. This app provides a simple registration system with data visualization and migration tools.
 
